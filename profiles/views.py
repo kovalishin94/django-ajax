@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import *
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 
 def index(request):
@@ -12,4 +12,10 @@ def getProfiles(request):
 
 
 def create(request):
-    pass
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        newProfile = Profile(name=name, e_mail=email)
+        newProfile.save()
+        return HttpResponse('New Profile created succesfully')
+    
